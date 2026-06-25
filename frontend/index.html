@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intrak - Dashboard Analítico y Predictivo</title>
+    
+    <!-- CSS local -->
+    <link rel="stylesheet" href="styles.css?v=3">
+
+    <!-- Plotly.js para gráficos avanzados -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <!-- Chart.js para complementos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- ================================================================ -->
+        <!-- HEADER: Título + Navegación                                    -->
+        <!-- ================================================================ -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">
+                    <span class="brand-icon">📦</span>
+                    Intrak, dashboard analítico y predictivo
+                </h1>
+                <p class="page-description" id="pageDescription">
+                    Análisis del desempeño de entregas de última milla
+                </p>
+            </div>
+            
+            <nav class="app-nav">
+                <button class="nav-button active" data-page="actual">
+                    Análisis Actual
+                </button>
+                <button class="nav-button" data-page="futuro">
+                    Análisis Futuro
+                </button>
+                <button class="nav-button" data-page="confianza">
+                    Confianza y Mejora
+                </button>
+            </nav>
+        </header>
+        
+        <!-- ================================================================ -->
+        <!-- FLASHCARDS: KPIs principales                                   -->
+        <!-- ================================================================ -->
+        <section class="flashcards-section">
+            <div class="flashcards-container" id="flashcardsContainer">
+                <!-- Cargado dinámicamente por main.js -->
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </section>
+        
+        <!-- ================================================================ -->
+        <!-- CONTENIDO PRINCIPAL: Sidebar + Main                            -->
+        <!-- ================================================================ -->
+        <div class="main-content">
+            
+            <!-- SIDEBAR: Filtros -->
+            <aside class="filters-sidebar">
+                <h3 class="filters-title">🔍 Filtros</h3>
+                
+                <!-- Selector de Modelo -->
+                <div class="filter-group">
+                    <label for="modelSelect">Modelo</label>
+                    <select id="modelSelect" class="filter-input">
+                        <option value="">Todos los modelos</option>
+                        <option value="linear">Linear</option>
+                        <option value="glm">GLM</option>
+                        <option value="xgboost">XGBoost</option>
+                    </select>
+                </div>
+                
+                <!-- Localidad -->
+                <div class="filter-group">
+                    <label for="localidadFilter">Localidad</label>
+                    <select id="localidadFilter" class="filter-input">
+                        <option value="">Todas</option>
+                        <option value="Kennedy">Kennedy</option>
+                        <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+                        <option value="Soacha">Soacha</option>
+                        <option value="Usaquén">Usaquén</option>
+                    </select>
+                </div>
+                
+                <!-- Tipo de Vía -->
+                <div class="filter-group">
+                    <label for="viaFilter">Tipo de Vía</label>
+                    <select id="viaFilter" class="filter-input">
+                        <option value="">Todas</option>
+                        <option value="Calle">Calle</option>
+                        <option value="Carrera">Carrera</option>
+                        <option value="Diagonal">Diagonal</option>
+                    </select>
+                </div>
+                
+                <!-- Vehículo -->
+                <div class="filter-group">
+                    <label for="vehiculoFilter">Vehículo</label>
+                    <select id="vehiculoFilter" class="filter-input">
+                        <option value="">Todos</option>
+                        <option value="Moto">Moto</option>
+                        <option value="Carro">Carro</option>
+                        <option value="Bicicleta">Bicicleta</option>
+                    </select>
+                </div>
+                
+                <!-- Nivel de Tráfico (Slider) -->
+                <div class="filter-group">
+                    <label for="trafficSlider">Nivel de Tráfico: <span id="trafficValue">2</span></label>
+                    <input type="range" id="trafficSlider" class="filter-slider" 
+                           min="0" max="5" value="2" step="1">
+                </div>
+                
+                <!-- Rango de Fechas -->
+                <div class="filter-group">
+                    <label for="dateRange">Rango de Fechas</label>
+                    <input type="date" id="dateFrom" class="filter-input" placeholder="Desde">
+                    <input type="date" id="dateTo" class="filter-input" placeholder="Hasta">
+                </div>
+                
+                <!-- Botón de aplicar filtros -->
+                <button class="button-primary" id="applyFiltersBtn">
+                    Aplicar Filtros
+                </button>
+                <button class="button-secondary" id="resetFiltersBtn">
+                    Limpiar
+                </button>
+            </aside>
+            
+            <!-- CONTENIDO PRINCIPAL -->
+            <main class="dashboard-content">
+                
+                <!-- PÁGINA 1: Análisis Actual -->
+                <section id="page-actual" class="dashboard-page active">
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3 class="chart-title">Tiempo Real vs Estimado (Evolución)</h3>
+                            <div id="chart-timeVsEstimate" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Tiempo Promedio por Localidad</h3>
+                            <div id="chart-timeByLocalidad" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Impacto del Tráfico en ETA</h3>
+                            <div id="chart-trafficImpact" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Impacto de la Lluvia en ETA</h3>
+                            <div id="chart-rainImpact" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container full-width">
+                            <h3 class="chart-title">Distribución de Tiempo por Tipo de Vía</h3>
+                            <div id="chart-timeByVia" class="chart-box"></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- PÁGINA 2: Análisis Futuro -->
+                <section id="page-futuro" class="dashboard-page">
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3 class="chart-title">Demanda y ETA Esperado Diario</h3>
+                            <div id="chart-realVsPredicted" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">OTIF y Retrasos Esperados por Día</h3>
+                            <div id="chart-etaDistribution" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Tráfico Esperado vs Riesgo de Retraso</h3>
+                            <div id="chart-riskByLocalidad" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Comparativo Histórico vs Predicho</h3>
+                            <div id="chart-heatmapSensivity" class="chart-box"></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- PÁGINA 3: Confianza y Mejora Continua -->
+                <section id="page-confianza" class="dashboard-page">
+                    <div class="charts-grid">
+                        <div class="chart-container full-width">
+                            <h3 class="chart-title">Métricas de Precisión por Modelo (MAE, RMSE, MAPE)</h3>
+                            <div id="chart-metricsComparison" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Evolución del Error en el Tiempo</h3>
+                            <div id="chart-errorEvolution" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title">Distribución del Error de Predicción</h3>
+                            <div id="chart-errorDistribution" class="chart-box"></div>
+                        </div>
+                        
+                        <div class="chart-container full-width">
+                            <h3 class="chart-title">💡 Propuestas de Mejora</h3>
+                            <div id="chart-improvements" class="improvement-box"></div>
+                        </div>
+                    </div>
+                </section>
+                
+            </main>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="main.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+================================================================================
+REPORTE FINAL DE ENTRENAMIENTO - MODELOS DE REGRESIÓN
+Logística de Última Milla - Intrak Bogotá
+================================================================================
+
+Fecha de generación: 2026-04-12 22:02:44
+
+Dataset: tiempo_real_min (minutos de entrega)
+Objetivo: Predicción con validación temporal sin leakage
+
+================================================================================
+MÉTRICAS POR MODELO (Validación)
+================================================================================
+
+[1] LINEAR REGRESSION
+  MAE (Error Absoluto Medio):     3.9825 minutos
+  MSE (Error Cuadrático Medio):   24.7664
+  RMSE (Raíz del MSE):            4.9766 minutos
+  MAPE (Error Absoluto Porcentual): 0.0709 (7.09%)
+  Datos entrenamiento:            42068 muestras
+  Datos validación:               10517 muestras
+
+[2] GLM (GAMMA, LOG-LINK)
+  MAE (Error Absoluto Medio):     4.1623 minutos
+  MSE (Error Cuadrático Medio):   27.6093
+  RMSE (Raíz del MSE):            5.2545 minutos
+  MAPE (Error Absoluto Porcentual): 0.0738 (7.38%)
+  Datos entrenamiento:            42068 muestras
+  Datos validación:               10517 muestras
+
+[3] HISTGRADIENTBOOSTING
+  MAE (Error Absoluto Medio):     4.0213 minutos
+  MSE (Error Cuadrático Medio):   25.3162
+  RMSE (Raíz del MSE):            5.0315 minutos
+  MAPE (Error Absoluto Porcentual): 0.0715 (7.15%)
+  Datos entrenamiento:            42068 muestras
+  Datos validación:               10517 muestras
+
+[4] XGBOOST
+  MAE (Error Absoluto Medio):     4.1046 minutos
+  MSE (Error Cuadrático Medio):   26.3630
+  RMSE (Raíz del MSE):            5.1345 minutos
+  MAPE (Error Absoluto Porcentual): 0.0728 (7.28%)
+  Datos entrenamiento:            42068 muestras
+  Datos validación:               10517 muestras
+
+================================================================================
+RECOMENDACIÓN
+================================================================================
+
+Mejor modelo (menor RMSE): Linear Regression
+Error RMSE: 4.9766 minutos
+
+================================================================================
+TABLA COMPARATIVA
+================================================================================
+
+Modelo                         MAE        RMSE       MAPE      
+----------------------------------------------------------------------
+Linear Regression              3.9825     4.9766     0.0709    
+GLM (Gamma, log-link)          4.1623     5.2545     0.0738    
+HistGradientBoosting           4.0213     5.0315     0.0715    
+XGBoost                        4.1046     5.1345     0.0728    
+
+================================================================================
+MODELOS GUARDADOS
+================================================================================
+
+[OK] glm_model.joblib               (44755.24 KB)
+
+[OK] histgb_model.joblib            (621.09 KB)
+
+[OK] linear_model.joblib            (1.29 KB)
+
+[OK] xgboost_model.joblib           (4684.94 KB)
+
+================================================================================
+FIN DEL REPORTE
+================================================================================
